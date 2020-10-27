@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run serve",
     "dev": "npm run serve",
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --copy --color",
     "build:test": "vue-cli-service build --mode test",
     "build:prod": "vue-cli-service build --mode prod",
     "build:hash": "vue-cli-service build --mode hash",

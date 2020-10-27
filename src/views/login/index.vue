@@ -11,7 +11,7 @@
         <a-form-item has-feedback name="password">
           <a-input type="password" v-model:value="form.password" placeholder="密码" autocomplete="off" />
         </a-form-item>
-        <a-form-item>
+        <a-form-item name="remember">
           <a-checkbox v-model:checked="form.remember">
             记住密码
           </a-checkbox>
