@@ -26,7 +26,7 @@ export function createImageFileInput() {
  * @param  {Number} duration 使用时间
  * @param  {Function} endCallback 完成后回调
  * @example scrollTo(window, window.pageYOffset, 0, 1000)
- */ 
+ */
 export function scrollTo(el, from = 0, to, duration = 500, endCallback) {
   if (!window.requestAnimationFrame) {
     window.requestAnimationFrame = (
@@ -101,8 +101,8 @@ export function addClass(el, cls) {
   let curClass = el.className
   const classes = (cls || '').split(' ')
 
-  for (var i = 0, j = classes.length; i < j; i++) {
-    var clsName = classes[i]
+  for (let i = 0, j = classes.length; i < j; i++) {
+    const clsName = classes[i]
     if (!clsName) {
       continue
     }
@@ -131,8 +131,8 @@ export function removeClass(el, cls) {
   const classes = cls.split(' ')
   let curClass = ' ' + el.className + ' '
 
-  for (var i = 0, j = classes.length; i < j; i++) {
-    var clsName = classes[i]
+  for (let i = 0, j = classes.length; i < j; i++) {
+    const clsName = classes[i]
     if (!clsName) {
       continue
     }
@@ -152,12 +152,24 @@ const SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g // eslint-disable-line
 const MOZ_HACK_REGEXP = /^moz([A-Z])/
 const ieVersion = Number(document.documentMode)
 
-const camelCase = function(name) {
+/**
+ * style 属性 从连字符格式转换为 驼峰格式
+ * @param {String} name 属性名
+ * @return {String} style 属性的驼峰格式
+ */
+export function camelCase(name) {
   return name.replace(SPECIAL_CHARS_REGEXP, (_, separator, letter, offset) => {
     return offset ? letter.toUpperCase() : letter
   }).replace(MOZ_HACK_REGEXP, 'Moz$1')
 }
 
+/**
+ * 绑定事件
+ * @param {HTMLElement} element dom元素
+ * @return {String} event 事件名
+ * @return {Function} handler 事件处理函数
+ * @return {void}
+ */
 export const on = (function() {
   if (document.addEventListener) {
     return function(element, event, handler) {
@@ -173,6 +185,13 @@ export const on = (function() {
   }
 })()
 
+/**
+ * 解绑事件
+ * @param {HTMLElement} element dom元素
+ * @return {String} event 事件名
+ * @return {Function} handler 事件处理函数
+ * @return {void}
+ */
 export const off = (function() {
   if (document.removeEventListener) {
     return function(element, event, handler) {
@@ -188,7 +207,13 @@ export const off = (function() {
   }
 })()
 
-export const isScroll = (el, vertical) => {
+/**
+ * 判断 dom 元素是否是可滚动容器
+ * @param {HTMLElement} el dom元素
+ * @param {Boolean} vertical 是否纵向滚动
+ * @return {Boolean} 判断结果
+ */
+export function isScroll(el, vertical) {
   const determinedDirection = isDefined(vertical)
   const overflow = determinedDirection
     ? vertical
@@ -199,6 +224,12 @@ export const isScroll = (el, vertical) => {
   return overflow.match(/(scroll|auto)/)
 }
 
+/**
+ * 获取 dom 元素样式
+ * @param {HTMLElement} element dom元素
+ * @param {String} styleName 样式属性名
+ * @return {String} style 样式
+ */
 export const getStyle = ieVersion < 9 ? function(element, styleName) {
   if (!element || !styleName) return null
   styleName = camelCase(styleName)
@@ -233,8 +264,17 @@ export const getStyle = ieVersion < 9 ? function(element, styleName) {
   }
 }
 
+/**
+ * 设置 dom 元素样式
+ * @param {HTMLElement} element dom元素
+ * @param {String} styleName 样式属性名
+ * @param {String} value 样式属性值
+ * @return {void}
+ */
 export function setStyle(element, styleName, value) {
-  if (!element || !styleName) return
+  if (!element || !styleName) {
+    return
+  }
 
   if (typeof styleName === 'object') {
     for (const prop in styleName) {
@@ -252,7 +292,13 @@ export function setStyle(element, styleName, value) {
   }
 }
 
-export const getScrollContainer = (el, vertical) => {
+/**
+ * 获取 dom 元素的外层滚动容器
+ * @param {HTMLElement} el dom元素
+ * @param {Boolean} vertical 是否纵向滚动
+ * @return {HTMLElement} 滚动容器
+ */
+export function getScrollContainer(el, vertical) {
   let parent = el
   while (parent) {
     if ([window, document, document.documentElement].includes(parent)) {
@@ -267,7 +313,7 @@ export const getScrollContainer = (el, vertical) => {
   return parent
 }
 
-export const isInContainer = (el, container) => {
+export function isInContainer(el, container) {
   if (!el || !container) {
     return false
   }
