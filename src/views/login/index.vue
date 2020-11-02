@@ -1,8 +1,9 @@
 <template>
   <div class="login">
+    <aside class="aside"></aside>
     <div class="form-container">
       <div class="logo">
-        <h1 class="title">登录</h1>
+        <h1 class="title">Ant Simple Pro</h1>
       </div>
       <a-form class="form" :model="form" :rules="rules" @finish="handleFinish">
         <a-form-item has-feedback name="userName">
@@ -17,7 +18,7 @@
           </a-checkbox>
         </a-form-item>
         <a-form-item>
-          <a-button class="submit-btn" type="primary" html-type="submit">
+          <a-button class="submit-btn" type="primary" html-type="submit" size="large">
             登录
           </a-button>
         </a-form-item>
@@ -56,46 +57,35 @@ export default {
 .login {
   height: 100vh;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
+  justify-content: space-around;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(-135deg, #00dbde, #fc00ff);
+  background: #f0f2f5;
+  &:before, &:after {
+    content: "";
+  }
+}
+.aside {
+  width: 46vw;
+  height: 85vh;
+  background: url("~@/assets/images/login.png") no-repeat;
+  background-size: contain;
 }
 .form-container {
-  width: 670px;
+  width: 480px;
+  padding: 64px;
   border-radius: 6px;
-  box-shadow: 0 0 100px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 40px 0 rgba(24, 144, 255, 0.1);
   background-color: #fff;
   .logo {
-    z-index: 1;
-    position: relative;
-    height: 180px;
-    margin-bottom: 24px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-image: url('~@/assets/images/login.jpg');
-    border-radius: 6px 6px 0 0;
-    &:after {
-      z-index: -1;
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(54, 84, 99, 0.7);
-      border-radius: 6px 6px 0 0;
-    }
     .title {
-      font-weight: 400;
-      color: #fff;
-      font-family: Microsoft Yahei;
-      margin: 0;
+      color: @color-theme;
     }
   }
   .form {
-    padding: 50px 120px;
     /deep/ .ant-input {
       border-top: 0;
       border-left: 0;
@@ -107,8 +97,8 @@ export default {
     }
     .submit-btn {
       width: 100%;
+      height: 48px;
       margin: 20px 0;
-      background: linear-gradient(-135deg, #00dbde, #fc00ff);
       border: 0;
     }
   }
