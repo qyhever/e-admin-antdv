@@ -13,3 +13,7 @@ app.use(router)
 app.use(store)
 initPlugin(app)
 app.mount('#app')
+
+if (process.env.NODE_ENV !== 'development') {
+  console.log(`latest delopy: %c${process.env.NOW}`, 'color: #67C23A')
+}

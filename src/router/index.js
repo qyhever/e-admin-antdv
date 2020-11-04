@@ -1,7 +1,27 @@
 import * as VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
+
+import BasicLayout from '@/layouts/basic'
 
 const routes = [
+  {
+    path: '/',
+    redirect: '/dashboard',
+    hidden: true
+  },
+  {
+    path: '',
+    component: BasicLayout,
+    children: [
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('@/views/dashboard'),
+        meta: {
+          title: '仪表盘'
+        }
+      }
+    ]
+  },
   {
     path: '/login',
     name: 'login',
