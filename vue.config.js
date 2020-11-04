@@ -39,8 +39,8 @@ module.exports = {
   pluginOptions: {
     // import global scss variables and mixins
     'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns: [resolve('./src/assets/styles/var.scss')]
+      preProcessor: 'less',
+      patterns: [resolve('./src/assets/styles/var.less')]
     }
   },
   chainWebpack(config) {
@@ -74,7 +74,7 @@ module.exports = {
       less: {
         lessOptions: {
           modifyVars: {
-            '@primary-color': '#346fff'
+            '@primary-color': '#1890FF'
           },
           javascriptEnabled: true
         }
