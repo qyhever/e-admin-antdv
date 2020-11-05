@@ -4,19 +4,19 @@
       aside
     </aside>
     <section class="layout-content">
-      <header class="header">
-        <div class="global-header">
-          header
-        </div>
-      </header>
+      <HeaderBar></HeaderBar>
       <router-view/>
     </section>
   </section>
 </template>
 
 <script>
+import HeaderBar from './headerbar'
 export default {
-  name: 'BasicLayout'
+  name: 'BasicLayout',
+  components: {
+    HeaderBar
+  }
 }
 </script>
 

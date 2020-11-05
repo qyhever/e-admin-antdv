@@ -86,7 +86,7 @@ export default {
     }
   }
   .form {
-    /deep/ .ant-input {
+    ::v-deep .ant-input {
       border-top: 0;
       border-left: 0;
       border-right: 0;
