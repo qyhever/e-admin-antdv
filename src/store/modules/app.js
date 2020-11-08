@@ -4,13 +4,13 @@ export default {
   namespaced: true,
 
   state: {
-    collapse: getCollapse() || false
+    collapsed: getCollapse() || false
   },
 
   mutations: {
-    TOGGLE_SIDEBAR(state) {
-      state.collapse = !state.collapse
-      setCollapse(state.collapse)
+    TOGGLE_SLIDE_BAR(state) {
+      state.collapsed = !state.collapsed
+      setCollapse(state.collapsed)
     }
   }
 }

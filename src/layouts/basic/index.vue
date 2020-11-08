@@ -1,8 +1,6 @@
 <template>
   <section class="layout">
-    <aside class="aside">
-      aside
-    </aside>
+    <SlideBar></SlideBar>
     <section class="layout-content">
       <HeaderBar></HeaderBar>
       <router-view/>
@@ -12,10 +10,12 @@
 
 <script>
 import HeaderBar from './headerbar'
+import SlideBar from './slidebar'
 export default {
   name: 'BasicLayout',
   components: {
-    HeaderBar
+    HeaderBar,
+    SlideBar
   }
 }
 </script>
@@ -23,11 +23,6 @@ export default {
 <style lang="less" scoped>
   .layout {
     display: flex;
-  }
-  .aside {
-    flex: 0 0 256px;
-    width: 256px;
-    background: #001529;
   }
   .layout-content {
     flex: auto;

@@ -6,6 +6,9 @@
 
 <script>
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  mounted() {
+    // this.$message.success('ok')
+  }
 }
 </script>

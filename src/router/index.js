@@ -36,7 +36,8 @@ const routes = [
 const router = VueRouter.createRouter({
   // mode: process.env.VUE_APP_HASH ? 'hash' : 'history',
   // base: process.env.VUE_APP_HASH ? '/' : process.env.BASE_URL,
-  history: VueRouter.createWebHashHistory(),
+  // history: process.env.VUE_APP_HASH ? VueRouter.createWebHashHistory() : VueRouter.createWebHistory,
+  history: VueRouter.createWebHistory(),
   routes
 })
 
