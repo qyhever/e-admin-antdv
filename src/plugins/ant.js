@@ -9,7 +9,8 @@ import {
   Layout,
   Menu,
   Dropdown,
-  Avatar
+  Avatar,
+  Modal
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -26,6 +27,12 @@ export default function(app) {
     .use(Menu)
     .use(Dropdown)
     .use(Avatar)
+    .use(Modal)
 
   g.$message = message
+  g.$info = Modal.info
+  g.$success = Modal.success
+  g.$error = Modal.error
+  g.$warning = Modal.warning
+  g.$confirm = Modal.confirm
 }

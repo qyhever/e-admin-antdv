@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header-trigger" @click="onToggle">
-      <ComSvgIcon name="menu-fold"></ComSvgIcon>
+      <ComSvgIcon :name="collapsed ? 'menu-unfold' : 'menu-fold'"></ComSvgIcon>
     </div>
     <a-dropdown placement="bottomRight">
       <a-row type="flex" align="middle" class="user-container">
@@ -17,7 +17,7 @@
             <span>个人中心</span>
           </a-menu-item>
           <a-menu-divider></a-menu-divider>
-          <a-menu-item>
+          <a-menu-item @click.native="onLogout">
             <LogoutOutlined />
             <span>退出登录</span>
           </a-menu-item>
@@ -28,16 +28,31 @@
 </template>
 
 <script>
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, LogoutOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import { createVNode } from 'vue'
+import { mapGetters } from 'vuex'
 export default {
   name: 'HeaderBar',
   components: {
     UserOutlined,
     LogoutOutlined
   },
+  computed: {
+    ...mapGetters(['collapsed'])
+  },
   methods: {
     onToggle() {
       this.$store.commit('app/TOGGLE_SLIDE_BAR')
+    },
+    onLogout() {
+      this.$confirm({
+        title: '温馨提示',
+        content: '确定要退出登录吗',
+        icon: createVNode(ExclamationCircleOutlined),
+        onOk() {
+          console.log('ok')
+        }
+      })
     }
   }
 }
