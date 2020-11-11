@@ -6,6 +6,7 @@
     collapsible
     :width="210"
     :collapsedWidth="60"
+    theme="light"
   >
     <router-link class="logo-container" to="/" title="Ant Simple Pro">
       <img class="image" src="@/assets/images/logo.png" alt="logo">
@@ -14,10 +15,11 @@
       </transition>
     </router-link>
     <a-menu
+      class="menu"
       v-model:openKeys="openKeys"
       v-model:selectedKeys="selectedKeys"
       mode="inline"
-      theme="dark"
+      theme="light"
       :inline-collapsed="collapsed"
     >
       <a-menu-item key="1">
@@ -98,7 +100,10 @@ export default {
 
 <style lang="less" scoped>
   .slidebar {
-    background: #001529;
+    // background: #001529;
+  }
+  .menu {
+    border-right: 0;
   }
   .logo-container {
     display: block;
@@ -120,7 +125,7 @@ export default {
       vertical-align: middle;
       margin: 0;
       margin-left: 12px;
-      color: #fff;
+      color: @color-primary;
       font-weight: 600;
       font-size: 16px;
     }

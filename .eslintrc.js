@@ -62,6 +62,7 @@ module.exports = {
     'quotes': ['error', 'single'],
     'space-infix-ops': 2, // 操作符周围必须有空格
     'spaced-comment': ['error', 'always'], // 注释后面必须跟随至少一个空白
+    'object-curly-spacing': 0,
 
     /**
      * ECMAScript6

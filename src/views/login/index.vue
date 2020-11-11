@@ -18,7 +18,13 @@
           </a-checkbox>
         </a-form-item>
         <a-form-item>
-          <a-button class="submit-btn" type="primary" html-type="submit" size="large">
+          <a-button
+            class="submit-btn"
+            type="primary"
+            html-type="submit"
+            size="large"
+            :loading="loading"
+          >
             登录
           </a-button>
         </a-form-item>
@@ -28,6 +34,14 @@
 </template>
 
 <script>
+import md5 from 'md5'
+import { login } from './service'
+import {
+  getRememberUser,
+  setRememberUser,
+  removeRememberUser,
+  setToken
+} from '@/utils/local'
 export default {
   data() {
     return {
@@ -39,15 +53,39 @@ export default {
       rules: {
         userName: [ { required: true, message: '请输入用户名!' } ],
         password: [ { required: true, message: '请输入密码!' } ]
-      }
+      },
+      loading: false
     }
   },
   mounted() {
-    console.log()
+    const rememberUser = getRememberUser()
+    if (rememberUser) {
+      this.form = rememberUser
+    }
   },
   methods: {
-    handleFinish(values) {
-      console.log(values)
+    async handleFinish(values) {
+      if (values.remember) {
+        setRememberUser(values)
+      } else {
+        removeRememberUser()
+      }
+      const params = {
+        userName: values.userName,
+        password: md5(md5(values.password))
+      }
+      try {
+        const response = await login({
+          loadingCb: loading => (this.loading = loading),
+          data: params
+        })
+        setToken(response.token)
+        this.$router.push('/')
+        this.$message.destroy()
+        this.$message.success('登录成功')
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }
