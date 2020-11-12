@@ -1,5 +1,11 @@
 import request from '@/api/request'
 
+export function getInfo() {
+  return request({
+    url: '/user/current'
+  })
+}
+
 export function getQiniuToken() {
   return request({
     url: '/upload/qiniu_token'

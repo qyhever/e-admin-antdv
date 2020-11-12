@@ -59,6 +59,7 @@
         </a-sub-menu>
       </a-sub-menu>
     </a-menu>
+    <div v-for="(item, index) in menus" :key="index">{{item.meta && item.meta.title}}</div>
   </a-layout-sider>
 </template>
 
@@ -71,6 +72,8 @@ import {
   InboxOutlined,
   AppstoreOutlined
 } from '@ant-design/icons-vue'
+import useMenus from './useMenus'
+
 export default {
   name: 'SlideBar',
   components: {
@@ -94,6 +97,13 @@ export default {
   },
   computed: {
     ...mapGetters(['collapsed'])
+  },
+  setup() {
+    const { menus } = useMenus()
+    console.log(menus)
+    return {
+      menus
+    }
   }
 }
 </script>
@@ -120,7 +130,7 @@ export default {
     }
     .title {
       .text-overflow;
-      max-width: 110px;
+      max-width: 116px;
       display: inline-block;
       vertical-align: middle;
       margin: 0;
