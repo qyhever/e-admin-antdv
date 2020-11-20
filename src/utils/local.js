@@ -4,6 +4,7 @@ const baseName = 'e-admin-antdv'
 const TOKEN = `${baseName}-token`
 const COLLAPSE = `${baseName}-collapse`
 const REMEMBER_LOGIN_USER = `${baseName}-remember-user`
+const TAG_NAV = `${baseName}-tag-nav`
 
 export const setToken = token => {
   return localStorage.setItem(TOKEN, token)
@@ -46,4 +47,22 @@ export const getRememberUser = () => {
 
 export const removeRememberUser = () => {
   return localStorage.removeItem(REMEMBER_LOGIN_USER)
+}
+
+export const setTagNav = (data) => {
+  return localStorage.setItem(TAG_NAV, JSON.stringify(data))
+}
+
+export const getTagNav = () => {
+  try {
+    const data = localStorage.getItem(TAG_NAV)
+    return JSON.parse(data)
+  } catch (err) {
+    console.log(err)
+    return null
+  }
+}
+
+export const removeTagNav = () => {
+  return localStorage.removeItem(TAG_NAV)
 }

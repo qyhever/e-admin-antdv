@@ -33,11 +33,7 @@ export default {
     RouteMenu
   },
   data() {
-    return {
-      selectedKeys: ['/dashboard'],
-      openKeys: ['sub1'],
-      preOpenKeys: ['sub1']
-    }
+    return {}
   },
   watch: {
     openKeys(val, oldVal) {
@@ -57,9 +53,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .slidebar {
-    // background: #001529;
-  }
   .menu {
     border-right: 0;
   }
@@ -83,7 +76,7 @@ export default {
       vertical-align: middle;
       margin: 0;
       margin-left: 12px;
-      color: @color-primary;
+      color: @color-theme;
       font-weight: 600;
       font-size: 16px;
     }

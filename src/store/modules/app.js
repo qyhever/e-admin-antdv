@@ -4,7 +4,8 @@ export default {
   namespaced: true,
 
   state: {
-    collapsed: getCollapse() || false
+    collapsed: getCollapse() || false,
+    tagNavList: []
   },
 
   mutations: {

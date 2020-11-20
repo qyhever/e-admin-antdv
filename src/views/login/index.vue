@@ -3,6 +3,7 @@
     <aside class="aside"></aside>
     <div class="form-container">
       <div class="logo">
+        <img class="image" src="@/assets/images/logo.png">
         <h1 class="title">Ant Simple Pro</h1>
       </div>
       <a-form class="form" :model="form" :rules="rules" @finish="handleFinish">
@@ -119,6 +120,11 @@ export default {
   .logo {
     display: flex;
     justify-content: center;
+    .image {
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+    }
     .title {
       color: @color-theme;
     }

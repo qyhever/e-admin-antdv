@@ -1,5 +1,5 @@
 import { getInfo } from '@/api/global'
-import { removeToken } from '@/utils/local'
+import { removeToken, removeTagNav } from '@/utils/local'
 
 export default {
   namespaced: true,
@@ -46,12 +46,13 @@ export default {
         resolve()
       })
     },
-    Logout({ commit }) {
+    Logout() {
       return new Promise((resolve) => {
         // async api
-        commit('SET_USER', {})
-        commit('SET_RESOURCE_LIST', [])
+        // commit('SET_USER', {})
+        // commit('SET_RESOURCE_LIST', [])
         removeToken()
+        removeTagNav()
         resolve()
       })
     }

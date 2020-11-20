@@ -49,3 +49,17 @@ export const getAccessMenus = (routes) => {
     return omit(item, ['component'])
   })
 }
+
+/**
+ * 生成固定在 tags-nav 的列表
+ * @param {Array} menus 菜单
+ * @return {Array} affixTags
+ */
+export const getAffixTags = (menus) => {
+  return menus.filter(item => {
+    if (Array.isArray(item.children)) {
+      item.children = getAffixTags(item.children)
+    }
+    return item.meta && item.meta.affix
+  })
+}

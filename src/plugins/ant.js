@@ -10,7 +10,8 @@ import {
   Menu,
   Dropdown,
   Avatar,
-  Modal
+  Modal,
+  Tag
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -28,6 +29,7 @@ export default function(app) {
     .use(Dropdown)
     .use(Avatar)
     .use(Modal)
+    .use(Tag)
 
   g.$message = message
   g.$info = Modal.info

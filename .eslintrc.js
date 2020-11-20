@@ -20,6 +20,7 @@ module.exports = {
      * 代码错误
      */
     'no-console': 0,
+    'no-debugger': 0,
 
     /**
      * 最佳实践

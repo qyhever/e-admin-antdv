@@ -17,7 +17,7 @@
             <span>个人中心</span>
           </a-menu-item>
           <a-menu-divider></a-menu-divider>
-          <a-menu-item @click.native="onLogout">
+          <a-menu-item @click="onLogout">
             <LogoutOutlined />
             <span>退出登录</span>
           </a-menu-item>
@@ -49,8 +49,11 @@ export default {
         title: '温馨提示',
         content: '确定要退出登录吗',
         icon: createVNode(ExclamationCircleOutlined),
-        onOk() {
-          console.log('ok')
+        onOk: () => {
+          this.$store.dispatch('user/Logout').then(() => {
+            // this.$router.replace('/login')
+            location.reload(true)
+          })
         }
       })
     }

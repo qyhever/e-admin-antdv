@@ -3,7 +3,11 @@
     <SlideBar></SlideBar>
     <section class="layout-content">
       <HeaderBar></HeaderBar>
-      <router-view/>
+      <TagsNav></TagsNav>
+      <main class="main">
+        <router-view/>
+      </main>
+      <FooterBar></FooterBar>
     </section>
   </section>
 </template>
@@ -11,11 +15,15 @@
 <script>
 import HeaderBar from './headerbar'
 import SlideBar from './slidebar'
+import TagsNav from './tags-nav'
+import FooterBar from './footerbar'
 export default {
   name: 'BasicLayout',
   components: {
     HeaderBar,
-    SlideBar
+    SlideBar,
+    TagsNav,
+    FooterBar
   }
 }
 </script>
@@ -30,6 +38,7 @@ export default {
     flex-direction: column;
     min-height: 100vh;
     background: #f0f2f5;
+    overflow-x: hidden;
   }
   .header {
     z-index: 9;
@@ -41,5 +50,8 @@ export default {
     height: 64px;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  }
+  .main {
+    min-height: calc(100vh - @header-height - 36px - 70px);
   }
 </style>

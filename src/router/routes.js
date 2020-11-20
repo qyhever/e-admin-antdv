@@ -1,10 +1,5 @@
-import { h } from 'vue'
 import BasicLayout from '@/layouts/basic'
-
-const RouteView = {
-  name: 'RouteView',
-  render: () => h('router-view')
-}
+import BlankLayout from '@/layouts/blank'
 
 export const basicRoutes = [
   {
@@ -12,13 +7,14 @@ export const basicRoutes = [
     name: 'dashboard',
     component: () => import('@/views/dashboard'),
     meta: {
-      title: '仪表盘'
+      title: '仪表盘',
+      affix: true
     }
   },
   {
     path: '/components',
     redirect: '/components/clipboard',
-    component: RouteView,
+    component: BlankLayout,
     meta: {
       title: '组件',
       icon: 'component',
@@ -145,6 +141,17 @@ export default [
     meta: {
       title: '登录'
     }
+  },
+  {
+    path: '/redirect',
+    component: BasicLayout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect')
+      }
+    ]
   },
   {
     path: '/',

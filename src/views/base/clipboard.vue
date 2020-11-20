@@ -1,7 +1,7 @@
 <template>
-  <ComPage>
+  <div>
     clipboard
-  </ComPage>
+  </div>
 </template>
 
 <script>

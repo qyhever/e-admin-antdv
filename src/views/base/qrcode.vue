@@ -1,7 +1,7 @@
 <template>
-  <ComPage>
+  <div>
     qrcode
-  </ComPage>
+  </div>
 </template>
 
 <script>
