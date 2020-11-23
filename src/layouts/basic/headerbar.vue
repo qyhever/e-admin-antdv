@@ -3,39 +3,58 @@
     <div class="header-trigger" @click="onToggle">
       <ComSvgIcon :name="collapsed ? 'menu-unfold' : 'menu-fold'"></ComSvgIcon>
     </div>
-    <a-dropdown placement="bottomRight">
-      <a-row type="flex" align="middle" class="user-container">
-        <a-avatar :size="26" :src="user.iconUrl">
-          <template v-slot:icon><UserOutlined /></template>
-        </a-avatar>
-        <span class="username">{{user.username}}</span>
+    <a-row class="header-right" type="flex" align="middle">
+      <a-row class="notification" type="flex" align="middle">
+        <a-badge count="5">
+          <BellOutlined class="icon-bell" />
+        </a-badge>
       </a-row>
-      <template v-slot:overlay>
-        <a-menu>
-          <a-menu-item>
-            <UserOutlined />
-            <span>个人中心</span>
-          </a-menu-item>
-          <a-menu-divider></a-menu-divider>
-          <a-menu-item @click="onLogout">
-            <LogoutOutlined />
-            <span>退出登录</span>
-          </a-menu-item>
-        </a-menu>
-      </template>
-    </a-dropdown>
+      <a-row class="fullscreen" type="flex" align="middle">
+        <FullscreenOutlined />
+      </a-row>
+      <a-dropdown placement="bottomRight">
+        <a-row type="flex" align="middle" class="user-container">
+          <a-avatar :size="26" :src="user.iconUrl">
+            <template v-slot:icon><UserOutlined /></template>
+          </a-avatar>
+          <span class="username">{{user.username}}</span>
+        </a-row>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <UserOutlined />
+              <span>个人中心</span>
+            </a-menu-item>
+            <a-menu-divider></a-menu-divider>
+            <a-menu-item @click="onLogout">
+              <LogoutOutlined />
+              <span>退出登录</span>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </a-row>
   </header>
 </template>
 
 <script>
-import { UserOutlined, LogoutOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import {
+  UserOutlined,
+  LogoutOutlined,
+  ExclamationCircleOutlined,
+  BellOutlined,
+  FullscreenOutlined
+  // FullscreenExitOutlined
+} from '@ant-design/icons-vue'
 import { createVNode } from 'vue'
 import { mapGetters } from 'vuex'
 export default {
   name: 'HeaderBar',
   components: {
     UserOutlined,
-    LogoutOutlined
+    LogoutOutlined,
+    BellOutlined,
+    FullscreenOutlined
   },
   computed: {
     ...mapGetters(['collapsed', 'user'])
@@ -84,7 +103,31 @@ export default {
       background-color: #f9f9fc;
     }
   }
+  .notification {
+    height: 100%;
+    cursor: pointer;
+    ::v-deep .ant-badge-count {
+      min-width: 14px;
+      height: 14px;
+      padding: 0;
+      font-size: 12px;
+      line-height: 14px;
+      border-radius: 7px;
+      background: #ff4d4f;
+    }
+  }
+  .icon-bell, .fullscreen {
+    font-size: 18px;
+    color: rgba(105, 123, 140, .7);
+  }
+  .fullscreen {
+    height: 100%;
+    margin-left: 10px;
+    padding: 0 12px;
+    cursor: pointer;
+  }
   .user-container {
+    height: 100%;
     padding: 0 12px;
     transition: background-color .2s;
     cursor: pointer;

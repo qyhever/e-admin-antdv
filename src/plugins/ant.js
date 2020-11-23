@@ -11,7 +11,8 @@ import {
   Dropdown,
   Avatar,
   Modal,
-  Tag
+  Tag,
+  Badge
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -30,6 +31,7 @@ export default function(app) {
     .use(Avatar)
     .use(Modal)
     .use(Tag)
+    .use(Badge)
 
   g.$message = message
   g.$info = Modal.info

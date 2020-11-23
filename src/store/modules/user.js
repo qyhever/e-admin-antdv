@@ -38,8 +38,6 @@ export default {
         getUserInfo(),
         getAccessMenus()
       ])
-      console.log('menus', menus)
-      console.log('user', user)
       commit('SET_ACCESS_MENUS', menus)
       commit('SET_USERINFO', user)
     },
@@ -62,17 +60,8 @@ export default {
     //       })
     //   })
     // },
-    GenerateRoutes() {
-      return new Promise(resolve => {
-        // const { roles } = data
-        // const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        // commit('SET_ROUTERS', accessedRouters)
-        resolve()
-      })
-    },
     Logout({ commit }) {
       return new Promise((resolve) => {
-        // async api
         commit('SET_USERINFO', {})
         removeUserInfo()
         // commit('SET_RESOURCE_LIST', [])

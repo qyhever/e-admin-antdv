@@ -47,10 +47,9 @@
 
 <script>
 // import { LeftOutlined, RightOutlined, SettingOutlined } from '@ant-design/icons-vue'
-import { ref } from 'vue'
 import { getAffixTags } from '@/utils'
-import useMenus from './useMenus'
 import { setTagNav, getTagNav } from '@/utils/local'
+import { routes } from '@/router/routes'
 export default {
   name: 'TagsNav',
   components: {
@@ -67,15 +66,6 @@ export default {
       selectedTag: {}
     }
   },
-  setup() {
-    const affixTags = ref([])
-    useMenus(menus => {
-      affixTags.value = getAffixTags(menus)
-    })
-    return {
-      affixTags
-    }
-  },
   watch: {
     $route: {
       immediate: true,
@@ -90,7 +80,7 @@ export default {
   },
   computed: {
     tags() {
-      return this.affixTags.concat(this.tagNavList)
+      return getAffixTags(routes).concat(this.tagNavList)
     }
   },
   mounted() {
