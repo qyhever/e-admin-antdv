@@ -7,20 +7,20 @@ const generateMenus = (menus) => {
       const title = (
         <span>
           <MenuIcon />
-          <span>{item.meta && item.meta.title}</span>
+          <span>{item.title}</span>
         </span>
       )
-      return !item.hidden && (
-        <a-sub-menu key={item.path} title={title}>
+      return (
+        <a-sub-menu key={item.url} title={title}>
           {generateMenus(item.children)}
         </a-sub-menu>
       )
     }
-    return !item.hidden && (
-      <a-menu-item key={item.path}>
-        <router-link to={item.path}>
+    return (
+      <a-menu-item key={item.url}>
+        <router-link to={item.url}>
           <MenuIcon />
-          <span>{item.meta && item.meta.title}</span>
+          <span>{item.title}</span>
         </router-link>
       </a-menu-item>
     )
@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     rootSubmenuKeys() {
-      return this.menus.map(_ => _.path)
+      return this.menus.map(_ => _.url)
     }
   },
   watch: {
@@ -57,11 +57,15 @@ export default {
   },
   mounted() {
     this.updateMenu()
+    // watchEffect(() => {
+    //   this.updateMenu()
+    // })
   },
   methods: {
     updateMenu() {
       const routes = this.$route.matched.slice()
-      this.selectedKeys = [routes.pop().path]
+      const lastMatchRoute = routes.slice(-1)[0]
+      this.selectedKeys = [lastMatchRoute.path]
       const openKeys = []
       routes.forEach(item => {
         item.path && openKeys.push(item.path)

@@ -1,41 +1,45 @@
 <template>
   <div class="login">
-    <aside class="aside"></aside>
-    <div class="form-container">
-      <div class="logo">
-        <img class="image" src="@/assets/images/logo.png">
-        <h1 class="title">Ant Simple Pro</h1>
+    <a-row class="login-main" type="flex" align="middle" justify="space-around">
+      <aside class="aside"></aside>
+      <div class="form-container">
+        <a-row class="logo" type="flex" align="middle" justify="center">
+          <img class="image" src="@/assets/images/logo.png">
+          <h1 class="title">Ant Simple Pro</h1>
+        </a-row>
+        <a-form class="form" :model="form" :rules="rules" @finish="handleFinish">
+          <a-form-item has-feedback name="email">
+            <a-input v-model:value="form.email" placeholder="账号" autocomplete="off" />
+          </a-form-item>
+          <a-form-item has-feedback name="password">
+            <a-input type="password" v-model:value="form.password" placeholder="密码" autocomplete="off" />
+          </a-form-item>
+          <a-form-item name="remember">
+            <a-checkbox v-model:checked="form.remember">
+              记住密码
+            </a-checkbox>
+          </a-form-item>
+          <a-form-item>
+            <a-button
+              class="submit-btn"
+              type="primary"
+              html-type="submit"
+              size="large"
+              :loading="loading"
+            >
+              登录
+            </a-button>
+          </a-form-item>
+        </a-form>
       </div>
-      <a-form class="form" :model="form" :rules="rules" @finish="handleFinish">
-        <a-form-item has-feedback name="userName">
-          <a-input v-model:value="form.userName" placeholder="账号" autocomplete="off" />
-        </a-form-item>
-        <a-form-item has-feedback name="password">
-          <a-input type="password" v-model:value="form.password" placeholder="密码" autocomplete="off" />
-        </a-form-item>
-        <a-form-item name="remember">
-          <a-checkbox v-model:checked="form.remember">
-            记住密码
-          </a-checkbox>
-        </a-form-item>
-        <a-form-item>
-          <a-button
-            class="submit-btn"
-            type="primary"
-            html-type="submit"
-            size="large"
-            :loading="loading"
-          >
-            登录
-          </a-button>
-        </a-form-item>
-      </a-form>
-    </div>
+    </a-row>
+    <FooterBar class="login-footer"></FooterBar>
   </div>
 </template>
 
 <script>
-import md5 from 'md5'
+// import md5 from 'md5'
+import { mapGetters } from 'vuex'
 import { login } from './service'
 import {
   getRememberUser,
@@ -43,20 +47,29 @@ import {
   removeRememberUser,
   setToken
 } from '@/utils/local'
+import FooterBar from '@/components/footerbar'
 export default {
+  components: {
+    FooterBar
+  },
   data() {
     return {
       form: {
-        userName: '',
+        email: '',
         password: '',
         remember: false
       },
       rules: {
-        userName: [ { required: true, message: '请输入用户名!' } ],
-        password: [ { required: true, message: '请输入密码!' } ]
-      },
-      loading: false
+        email: [
+          { required: true, message: '请填写邮箱!' },
+          { type: 'email', message: '邮箱格式不正确!' }
+        ],
+        password: [ { required: true, message: '请填写密码!' } ]
+      }
     }
+  },
+  computed: {
+    ...mapGetters(['loading'])
   },
   mounted() {
     const rememberUser = getRememberUser()
@@ -72,15 +85,14 @@ export default {
         removeRememberUser()
       }
       const params = {
-        userName: values.userName,
-        password: md5(md5(values.password))
+        email: values.email,
+        // password: md5(md5(values.password))
+        password: values.password
       }
       try {
-        const response = await login({
-          loadingCb: loading => (this.loading = loading),
-          data: params
-        })
-        setToken(response.token)
+        const token = await login(params)
+        setToken(token) // save local
+        await this.$store.dispatch('user/GetUserData')
         this.$router.push('/')
         this.$message.destroy()
         this.$message.success('登录成功')
@@ -96,19 +108,20 @@ export default {
 .login {
   height: 100vh;
   display: flex;
-  // justify-content: center;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
   overflow: hidden;
-  background: #f0f2f5;
+  background: #fff;
+}
+.login-main {
+  flex: auto;
   &:before, &:after {
     content: "";
   }
 }
 .aside {
-  width: 46vw;
-  height: 85vh;
-  background: url("~@/assets/images/login.png") no-repeat;
+  width: 46.5vw;
+  height: 86vh;
+  background: url("~@/assets/images/login.png") center no-repeat;
   background-size: contain;
 }
 .form-container {
@@ -118,8 +131,6 @@ export default {
   box-shadow: 0 0 40px 0 rgba(24, 144, 255, 0.1);
   background-color: #fff;
   .logo {
-    display: flex;
-    justify-content: center;
     .image {
       width: 36px;
       height: 36px;
@@ -127,6 +138,7 @@ export default {
     }
     .title {
       color: @color-theme;
+      font-size: 18px;
     }
   }
   .form {
@@ -145,6 +157,11 @@ export default {
       margin: 20px 0;
       border: 0;
     }
+  }
+}
+@media screen and (max-width: 1080px) {
+  .aside {
+    display: none;
   }
 }
 </style>

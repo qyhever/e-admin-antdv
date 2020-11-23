@@ -5,10 +5,10 @@
     </div>
     <a-dropdown placement="bottomRight">
       <a-row type="flex" align="middle" class="user-container">
-        <a-avatar :size="32">
+        <a-avatar :size="26" :src="user.iconUrl">
           <template v-slot:icon><UserOutlined /></template>
         </a-avatar>
-        <span class="username">etachsir</span>
+        <span class="username">{{user.username}}</span>
       </a-row>
       <template v-slot:overlay>
         <a-menu>
@@ -38,7 +38,7 @@ export default {
     LogoutOutlined
   },
   computed: {
-    ...mapGetters(['collapsed'])
+    ...mapGetters(['collapsed', 'user'])
   },
   methods: {
     onToggle() {
@@ -66,18 +66,19 @@ export default {
     display: flex;
     justify-content: space-between;
     height: @header-height;
+    padding-right: 24px;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
   }
   .header-trigger {
     width: @header-height;
     height: @header-height;
-    font-size: @font-size-extra-large;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: background-color .2s;
     cursor: pointer;
+    font-size: @font-size-extra-large;
     &:hover {
       // color: @color-primary;
       background-color: #f9f9fc;
@@ -93,6 +94,7 @@ export default {
     }
     .username {
       margin-left: 8px;
+      color: rgba(105, 123, 140, .7);
     }
   }
 </style>

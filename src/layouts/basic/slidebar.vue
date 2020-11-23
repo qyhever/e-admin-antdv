@@ -15,7 +15,7 @@
       </transition>
     </router-link>
     <RouteMenu
-      :menus="menus"
+      :menus="accessMenus"
       :collapsed="collapsed"
     >
     </RouteMenu>
@@ -24,7 +24,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import useMenus from './useMenus'
+// import useMenus from './useMenus'
 import RouteMenu from './route-menu'
 
 export default {
@@ -41,14 +41,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['collapsed'])
-  },
-  setup() {
-    const { menus } = useMenus()
-    return {
-      menus
-    }
+    ...mapGetters(['collapsed', 'accessMenus'])
   }
+  // setup() {
+  //   const { menus } = useMenus()
+  //   return {
+  //     menus
+  //   }
+  // }
 }
 </script>
 

@@ -1,14 +1,14 @@
 import request from '@/api/request'
 
-export function getInfo() {
+export function getUserInfo() {
   return request({
-    url: '/user/current'
+    url: '/user/info'
   })
 }
 
-export function getQiniuToken() {
+export function getAccessMenus() {
   return request({
-    url: '/upload/qiniu_token'
+    url: '/menu/getCurrentUserMenuAuthTree'
   })
 }
 

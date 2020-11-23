@@ -1,43 +1,67 @@
-import { getInfo } from '@/api/global'
-import { removeToken, removeTagNav } from '@/utils/local'
+import { getUserInfo, getAccessMenus } from '@/api/global'
+import {
+  getUserInfo as getLocalUserInfo,
+  setUserInfo,
+  removeUserInfo,
+  removeToken,
+  removeTagNav,
+  setAccessMenus,
+  getAccessMenus as getLocalAccessMenus,
+  removeAccessMenus
+} from '@/utils/local'
 
 export default {
   namespaced: true,
 
   state: {
-    currentUser: {},
-    resourceList: []
+    currentUser: getLocalUserInfo() || {},
+    resourceList: [],
+    accessMenus: getLocalAccessMenus() || []
   },
 
   mutations: {
-    SET_USER(state, data) {
+    SET_USERINFO(state, data) {
       state.currentUser = data || {}
+      setUserInfo(data)
     },
     SET_RESOURCE_LIST(state, data) {
       state.resourceList = data
+    },
+    SET_ACCESS_MENUS(state, data) {
+      state.accessMenus = data || []
+      setAccessMenus(data)
     }
   },
   actions: {
-    GetInfo({ commit }) {
-      return new Promise((resolve, reject) => {
-        getInfo()
-          .then(response => {
-            const resourceList = response.resources.map(v => v.code)
-            if (resourceList.length) {
-              commit('SET_USER', response)
-              commit('SET_RESOURCE_LIST', resourceList)
-              resolve()
-            } else {
-              reject(new Error('resources must be a non-null array !'))
-            }
-          })
-          .catch(err => {
-            console.log(err)
-            reject(err)
-          })
-      })
+    async GetUserData({ commit }) {
+      const [user, menus] = await Promise.all([
+        getUserInfo(),
+        getAccessMenus()
+      ])
+      console.log('menus', menus)
+      console.log('user', user)
+      commit('SET_ACCESS_MENUS', menus)
+      commit('SET_USERINFO', user)
     },
-    // { commit }, data
+    // GetInfo({ commit }) {
+    //   return new Promise((resolve, reject) => {
+    //     getInfo()
+    //       .then(response => {
+    //         const resourceList = response.resources.map(v => v.code)
+    //         if (resourceList.length) {
+    //           commit('SET_USERINFO', response)
+    //           commit('SET_RESOURCE_LIST', resourceList)
+    //           resolve()
+    //         } else {
+    //           reject(new Error('resources must be a non-null array !'))
+    //         }
+    //       })
+    //       .catch(err => {
+    //         console.log(err)
+    //         reject(err)
+    //       })
+    //   })
+    // },
     GenerateRoutes() {
       return new Promise(resolve => {
         // const { roles } = data
@@ -46,11 +70,14 @@ export default {
         resolve()
       })
     },
-    Logout() {
+    Logout({ commit }) {
       return new Promise((resolve) => {
         // async api
-        // commit('SET_USER', {})
+        commit('SET_USERINFO', {})
+        removeUserInfo()
         // commit('SET_RESOURCE_LIST', [])
+        commit('SET_ACCESS_MENUS', [])
+        removeAccessMenus()
         removeToken()
         removeTagNav()
         resolve()

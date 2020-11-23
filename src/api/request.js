@@ -2,16 +2,33 @@ import axios from 'axios'
 import qs from 'qs'
 import { message } from 'ant-design-vue'
 import { getToken } from '@/utils/local'
-// import store from '@/store'
+import store from '@/store'
 // import router from '@/router'
 
 // 根据 VUE_APP_MODE 来切换接口跟路径
 const baseURL = {
-  // dev: 'http://localhost:4399',
-  dev: 'https://qyhever.com/e-admin',
-  test: 'https://qyhever.com/e-admin',
-  prod: 'https://qyhever.com/e-admin'
+  dev: '/api',
+  test: 'http://115.29.224.69',
+  prod: 'http://115.29.224.69'
 }[process.env.VUE_APP_MODE]
+
+const FORMDATA_CONTENT_TYPE = 'application/x-www-form-urlencoded'
+
+let loadingCount = 0
+
+function startCount() {
+  loadingCount++
+  if (!store.getters.loading) {
+    store.commit('app/SET_LOADING', true)
+  }
+}
+
+function endCount() {
+  loadingCount--
+  if (loadingCount === 0) {
+    store.commit('app/SET_LOADING', false)
+  }
+}
 
 const codeMessage = {
   400: '请求错误',
@@ -43,21 +60,25 @@ const getErrorMsg = (error, errorMsg) => {
   }
   return msg || '操作失败'
 }
+// 请求之前
 const requestStart = (config, loadingCb, showLoading) => {
   loadingCb(true)
+  startCount()
+  if (showLoading) {
+    // Loading.open()
+  }
   removePending(config) // 在请求开始前，对之前的请求做检查取消操作
   addPending(config) // 添加本次请求到 pending 中
   config.headers = config.headers || {}
   const token = getToken()
   if (token) {
-    config.headers.Authorization = token
-  }
-  if (showLoading) {
-    // Loading.open()
+    config.headers.accesstoken = token
   }
 }
+// 响应正常
 const requestThenEnd = ({response, loadingCb, showLoading, showWarning, warningMsg, throwWarningError}) => {
   loadingCb(false)
+  endCount()
   if (showLoading) {
     // Loading.close()
   }
@@ -79,8 +100,10 @@ const requestThenEnd = ({response, loadingCb, showLoading, showWarning, warningM
   }
   return genEmptyPromise()
 }
+// 响应异常
 const requestCatchEnd = ({error, loadingCb, showLoading, showError, errorMsg, throwHttpError}) => {
   loadingCb(false)
+  endCount()
   if (showLoading) {
     // Loading.close()
   }
@@ -176,7 +199,16 @@ const instance = axios.create({
   // 只作用于 params（手动拼接在 url 后的参数不走这里）
   paramsSerializer,
   // 请求超时时间
-  timeout: 10000
+  timeout: 10000,
+  headers: {
+    'Content-Type': FORMDATA_CONTENT_TYPE
+  },
+  transformRequest: [function(data, headers) {
+    if (headers['Content-Type'] === FORMDATA_CONTENT_TYPE) {
+      return qs.stringify(data)
+    }
+    return data
+  }]
 })
 /**
  * @param {Object} options 请求配置参数

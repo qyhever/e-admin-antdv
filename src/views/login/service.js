@@ -1,10 +1,9 @@
 import request from '@/api/request'
 
-export function login({ loadingCb, data}) {
+export function login(data) {
   return request({
     method: 'post',
-    url: '/user/login',
-    data,
-    loadingCb
+    url: '/login',
+    data
   })
 }

@@ -95,6 +95,15 @@ export default {
   },
   mounted() {
     document.body.addEventListener('click', this.closeMenu)
+    // this.addTag(this.$route)
+    // this.getTagElementByRoute(this.$route)
+    // watchEffect(() => {
+    //   this.addTag(this.$route)
+    //   this.getTagElementByRoute(this.$route)
+    // })
+    // watchEffect(() => {
+    //   setTagNav(this.tagNavList)
+    // })
   },
   beforeUnmount() {
     document.body.removeEventListener('click', this.closeMenu)
@@ -275,8 +284,10 @@ export default {
   }
   .nav-tag {
     margin-top: 6px;
+    background: #fff;
     cursor: pointer;
     &::v-deep.ant-tag-blue {
+      background: #e6f7ff;
       .anticon-close {
         color: rgba(24, 144, 255, 0.85);
         &:hover {

@@ -14,6 +14,7 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     port: PORT,
+    host: 'localhost',
     overlay: {
       warnings: true,
       errors: true
@@ -27,8 +28,15 @@ module.exports = {
           '^/server/mock': '/'
         }
       },
+      '/api': {
+        target: 'http://115.29.224.69/api',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/'
+        }
+      },
       '/server': {
-        target: 'http://localhost:3000',
+        target: 'http://qyhever.com/e-admin',
         changeOrigin: true,
         pathRewrite: {
           '^/server': '/'

@@ -3,123 +3,86 @@ import BlankLayout from '@/layouts/blank'
 
 export const basicRoutes = [
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('@/views/dashboard'),
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/home'),
     meta: {
-      title: '仪表盘',
+      title: '首页',
       affix: true
     }
   },
   {
-    path: '/components',
-    redirect: '/components/clipboard',
-    component: BlankLayout,
+    path: '/userInfo',
+    name: 'userInfo',
+    component: () => import('@/views/user/userinfo'),
     meta: {
-      title: '组件',
-      icon: 'component',
-      permission: ['component']
-    },
+      title: '用户信息'
+    }
+  },
+  {
+    path: '/globalization',
+    name: 'globalization',
+    component: () => import('@/views/globalization'),
+    meta: {
+      title: '国际化'
+    }
+  },
+  {
+    path: '/system',
+    name: 'system',
+    component: BlankLayout,
     children: [
       {
-        name: 'clipboard',
-        path: '/components/clipboard',
-        component: () => import('@/views/base/clipboard'),
+        path: '/system/menu',
+        component: () => import('@/views/system/menu'),
         meta: {
-          title: '复制',
-          permission: ['clipboard']
-        }
-      },
-      {
-        name: 'qrcode',
-        path: '/components/qrcode',
-        component: () => import('@/views/base/qrcode'),
-        meta: {
-          title: '二维码',
-          permission: ['qrcode']
+          title: '菜单管理'
         }
       }
     ]
   },
   {
-    name: 'user',
-    path: '/user',
+    path: '/userManage',
+    name: 'userManage',
     component: () => import('@/views/user'),
     meta: {
-      title: '账号管理',
-      icon: 'user',
-      permission: ['user']
+      title: '用户管理'
     }
   },
   {
-    name: 'role',
-    path: '/role',
-    component: () => import('@/views/role'),
-    meta: {
-      title: '角色管理',
-      icon: 'role',
-      permission: ['role']
-    }
-  },
-  {
-    name: 'resource',
-    path: '/resource',
-    component: () => import('@/views/resource'),
-    meta: {
-      title: '权限管理',
-      icon: 'resource',
-      permission: ['resource']
-    }
-  },
-  {
-    name: 'admin',
-    path: '/admin',
-    meta: {
-      title: 'admin页面',
-      icon: 'admin',
-      permission: ['adminPage']
-    },
-    component: () => import('@/views/permission/admin')
-  },
-  {
-    name: 'dev',
-    path: '/dev',
-    meta: {
-      title: 'dev页面',
-      icon: 'dev',
-      permission: ['devPage']
-    },
-    component: () => import('@/views/permission/dev')
-  },
-  {
-    name: 'guest',
-    path: '/guest',
-    meta: {
-      title: 'guest页面',
-      icon: 'guest',
-      permission: ['guestPage']
-    },
-    component: () => import('@/views/permission/guest')
-  },
-  {
-    name: 'test',
-    path: '/test',
-    meta: {
-      title: 'test页面',
-      icon: 'test',
-      permission: ['testPage']
-    },
-    component: () => import('@/views/permission/test')
-  },
-  {
-    name: 'operation',
-    path: '/operation',
-    meta: {
-      title: 'operation页面',
-      icon: 'operation',
-      permission: ['operationPage']
-    },
-    component: () => import('@/views/permission/operation')
+    path: '/component',
+    name: 'component',
+    component: BlankLayout,
+    children: [
+      {
+        path: '/component/chart',
+        component: () => import('@/views/component/chart'),
+        meta: {
+          title: '图表'
+        }
+      },
+      {
+        path: '/component/everUse',
+        component: () => import('@/views/component/common'),
+        meta: {
+          title: '常用组件'
+        }
+      },
+      {
+        path: '/component/form',
+        component: () => import('@/views/component/form'),
+        meta: {
+          title: '表单组件'
+        }
+      },
+      {
+        path: '/component/table',
+        component: () => import('@/views/component/table'),
+        meta: {
+          title: '表格组件'
+        }
+      }
+    ]
   }
 ]
 
@@ -136,7 +99,6 @@ export default [
   {
     path: '/login',
     name: 'login',
-    hidden: true,
     component: () => import('@/views/login'),
     meta: {
       title: '登录'
@@ -145,7 +107,6 @@ export default [
   {
     path: '/redirect',
     component: BasicLayout,
-    hidden: true,
     children: [
       {
         path: '/redirect/:path(.*)',
@@ -155,12 +116,10 @@ export default [
   },
   {
     path: '/',
-    redirect: '/dashboard',
-    hidden: true
+    redirect: '/home'
   },
   {
     path: '/',
-    hidden: true,
     component: BasicLayout,
     children: basicRoutes
   },
