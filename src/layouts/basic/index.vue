@@ -7,7 +7,7 @@
       <main class="main">
         <router-view/>
       </main>
-      <FooterBar></FooterBar>
+      <FooterBar class="footer"></FooterBar>
     </section>
   </section>
 </template>
@@ -16,7 +16,7 @@
 import HeaderBar from './headerbar'
 import SlideBar from './slidebar'
 import TagsNav from './tags-nav'
-import FooterBar from './footerbar'
+import FooterBar from '@/components/footerbar'
 export default {
   name: 'BasicLayout',
   components: {
@@ -51,7 +51,11 @@ export default {
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
   }
+  .footer {
+    padding: 15px 0;
+    height: 80px;
+  }
   .main {
-    min-height: calc(100vh - @header-height - 36px - 70px);
+    min-height: calc(100vh - @header-height - 36px - 80px);
   }
 </style>

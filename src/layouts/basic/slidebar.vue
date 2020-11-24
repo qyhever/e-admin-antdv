@@ -53,6 +53,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  ::v-deep {
+    .ant-menu-inline .ant-menu-item::after {
+      right: 1px;
+    }
+  }
   .menu {
     border-right: 0;
   }

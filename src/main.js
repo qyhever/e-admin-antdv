@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import i18n from './locales'
 
 import './permission'
 import './assets/icons'
@@ -13,6 +14,7 @@ const app = createApp(App)
 app.config.productionTip = false
 app.use(router)
 app.use(store)
+app.use(i18n)
 initPlugin(app)
 app.mount('#app')
 

@@ -12,7 +12,13 @@ import {
   Avatar,
   Modal,
   Tag,
-  Badge
+  Badge,
+  Radio,
+  List,
+  Table,
+  Divider,
+  Tooltip,
+  Space
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -32,6 +38,12 @@ export default function(app) {
     .use(Modal)
     .use(Tag)
     .use(Badge)
+    .use(Radio)
+    .use(List)
+    .use(Table)
+    .use(Divider)
+    .use(Tooltip)
+    .use(Space)
 
   g.$message = message
   g.$info = Modal.info
