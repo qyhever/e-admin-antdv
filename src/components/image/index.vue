@@ -1,5 +1,5 @@
 <template>
-  <div class="com-image">
+  <div class="com-image" :class="className">
     <slot v-if="loading" name="placeholder">
       <div class="com-image__placeholder"></div>
     </slot>
@@ -10,13 +10,12 @@
       v-else
       class="com-image__inner"
       v-bind="$attrs"
-      v-on="$listeners"
       @click="clickHandler"
       :src="src"
       :style="imageStyle"
       :class="{ 'com-image__inner--center': alignCenter, 'com-image__preview': preview }">
     <template v-if="preview">
-      <image-viewer :z-index="zIndex" :initial-index="imageIndex" v-if="showViewer" :on-close="closeViewer" :url-list="previewSrcList"/>
+      <image-viewer :z-index="zIndex" :initial-index="imageIndex" v-model:visible="showViewer" :on-close="closeViewer" :url-list="previewSrcList"/>
     </template>
   </div>
 </template>
@@ -38,8 +37,6 @@ const ObjectFit = {
   SCALE_DOWN: 'scale-down'
 }
 
-let prevOverflow = ''
-
 export default {
   name: 'ComImage',
 
@@ -50,6 +47,7 @@ export default {
   },
 
   props: {
+    className: String,
     src: String,
     fit: String,
     lazy: Boolean,
@@ -119,7 +117,7 @@ export default {
     }
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.lazy && this.removeLazyLoadListener()
   },
 
@@ -222,13 +220,10 @@ export default {
       if (!this.preview) {
         return
       }
-      // prevent body scroll
-      prevOverflow = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
       this.showViewer = true
+      console.log(this.showViewer)
     },
     closeViewer() {
-      document.body.style.overflow = prevOverflow
       this.showViewer = false
     }
   }

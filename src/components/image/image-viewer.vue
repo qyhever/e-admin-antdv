@@ -1,6 +1,6 @@
 <template>
   <transition name="viewer-fade">
-    <div tabindex="-1" ref="com-image-viewer__wrapper" class="com-image-viewer__wrapper" :style="{ 'z-index': zIndex }">
+    <div tabindex="-1" ref="com-image-viewer__wrapper" class="com-image-viewer__wrapper" :style="{ 'z-index': zIndex }" v-if="visible">
       <div class="com-image-viewer__mask"></div>
       <!-- CLOSE -->
       <span class="com-image-viewer__btn com-image-viewer__close" @click="hide">
@@ -68,6 +68,8 @@ const Mode = {
 
 const mousewheelEventName = isFirefox() ? 'DOMMouseScroll' : 'mousewheel'
 
+let prevOverflow = ''
+
 export default {
   name: 'ImageViewer',
 
@@ -91,6 +93,10 @@ export default {
     initialIndex: {
       type: Number,
       default: 0
+    },
+    visible: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -154,6 +160,15 @@ export default {
           this.loading = true
         }
       })
+    },
+    visible(val) {
+      if (val) {
+        // prevent body scroll
+        prevOverflow = document.body.style.overflow
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = prevOverflow
+      }
     }
   },
   mounted() {

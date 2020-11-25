@@ -2,26 +2,29 @@
   <div class="com-page">
     <LayoutTable
       tableTitle="查询表格"
-      :columns="columns"
-      :dataSource="dataSource"
+      :loading="loading"
+      :tableProps="{
+        columns,
+        dataSource: userList,
+        rowKey: v => v.id
+      }"
       :pagination="false"
     >
       <template #search>
         <a-form
+          ref="form"
           layout="inline"
-          :model="formInline"
-          @submit="handleSubmit"
-          @submit.prevent
+          :model="{}"
         >
           <a-form-item label="名称">
-            <a-input v-model:value="formInline.user" placeholder="请输入"></a-input>
+            <a-input v-model:value="username" placeholder="请输入" allowClear></a-input>
           </a-form-item>
           <a-form-item>
             <a-space>
-              <a-button type="primary" html-type="submit">
+              <a-button type="primary" @click="handleSubmit">
                 查询
               </a-button>
-              <a-button>
+              <a-button @click="onReset">
                 重置
               </a-button>
             </a-space>
@@ -30,7 +33,7 @@
       </template>
       <template #buttons>
         <a-input-search
-          v-model:value="userName"
+          v-model:value="username"
           placeholder="请输入用户名"
           enter-button
           allowClear
@@ -38,7 +41,19 @@
         />
       </template>
       <template #extraIcons>
-        <ArrowDownOutlined />
+        <a-tooltip title="下载" placement="bottom">
+          <ArrowDownOutlined />
+        </a-tooltip>
+      </template>
+      <template #index="{ index }">
+        <span>
+          {{index + 1}}
+        </span>
+      </template>
+      <template #avatar="{ text }">
+        <ComImage className="avatar" :src="text" preview>
+          <template v-slot:error><UserOutlined /></template>
+        </ComImage>
       </template>
       <template #action="{ record }">
         <span>
@@ -50,95 +65,110 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import LayoutTable from '@/components/layout-table'
 import {
-  ArrowDownOutlined
+  ArrowDownOutlined,
+  UserOutlined
 } from '@ant-design/icons-vue'
+import { getUsers } from './service'
+import useRequest from '@/hooks/useRequest'
 const columns = [
   {
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'index',
+    key: 'index',
     align: 'center',
-    title: '序号'
+    title: '序号',
+    slots: { customRender: 'index' }
   },
   {
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'id',
+    key: 'id',
     align: 'center',
     title: 'id'
   },
   {
-    dataIndex: 'address',
-    key: 'address',
+    dataIndex: 'email',
+    key: 'email',
     align: 'center',
     title: 'email'
   },
   {
-    dataIndex: 'tags',
-    key: 'tags',
+    dataIndex: 'username',
+    key: 'username',
     align: 'center',
     title: '名称'
   },
   {
-    key: 'action',
-    title: 'Action',
+    dataIndex: 'introduct',
+    key: 'introduct',
     align: 'center',
+    title: '介绍'
+  },
+  {
+    dataIndex: 'iconUrl',
+    key: 'iconUrl',
+    align: 'center',
+    title: '头像',
+    slots: { customRender: 'avatar' }
+  },
+  {
+    key: 'action',
+    align: 'center',
+    title: '操作',
     slots: { customRender: 'action' }
   }
 ]
 
-const dataSource = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer']
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser']
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher']
-  }
-]
 export default {
   name: 'User',
   components: {
     LayoutTable,
-    ArrowDownOutlined
+    ArrowDownOutlined,
+    UserOutlined
   },
   data() {
     return {
-      formInline: {
-        user: '',
-        password: ''
-      },
-      columns,
-      dataSource,
-      userName: ''
+      columns
+    }
+  },
+  setup() {
+    const username = ref('')
+    const { data: userList = [], run, loading } = useRequest(() => getUsers({
+      username: username.value
+    }))
+    console.log('userList', userList)
+    return {
+      userList,
+      username,
+      run,
+      loading
     }
   },
   methods: {
-    handleSubmit(e) {
-      e.preventDefault()
-      console.log('e', e)
-      console.log(this.formInline)
+    handleSubmit() {
+      this.run()
     },
     onUpdate(row) {
       console.log(row)
     },
     onSearch() {
-      console.log('onSearch')
+      setTimeout(() => {
+        this.run()
+      }, 20)
+    },
+    onReset() {
+      this.username = ''
+      this.run()
     }
   }
 }
 </script>
+
+<style lang="less" scoped>
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+</style>

@@ -18,7 +18,9 @@ import {
   Table,
   Divider,
   Tooltip,
-  Space
+  Space,
+  Tabs,
+  Spin
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -44,6 +46,8 @@ export default function(app) {
     .use(Divider)
     .use(Tooltip)
     .use(Space)
+    .use(Tabs)
+    .use(Spin)
 
   g.$message = message
   g.$info = Modal.info

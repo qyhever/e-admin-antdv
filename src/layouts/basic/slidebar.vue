@@ -9,7 +9,7 @@
     theme="light"
   >
     <router-link class="logo-container" to="/" title="Ant Simple Pro">
-      <img class="image" src="@/assets/images/logo.png" alt="logo">
+      <ComImage className="image" :src="require('@/assets/images/logo.png')" alt="logo" />
       <transition name="title-fade">
         <h1 v-show="!collapsed" class="title">Ant Simple Pro</h1>
       </transition>

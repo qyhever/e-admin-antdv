@@ -5,12 +5,10 @@
     </div>
     <a-row class="header-right" type="flex" align="middle">
       <a-row class="notification" type="flex" align="middle">
-        <a-badge count="5">
-          <BellOutlined class="icon-bell" />
-        </a-badge>
+        <Notification />
       </a-row>
       <a-row class="fullscreen" type="flex" align="middle">
-        <FullscreenOutlined />
+        <Fullscreen />
       </a-row>
       <a-dropdown placement="bottomRight">
         <a-row type="flex" align="middle" class="user-container">
@@ -21,7 +19,7 @@
         </a-row>
         <template #overlay>
           <a-menu>
-            <a-menu-item>
+            <a-menu-item @click="onToPersonCenter">
               <UserOutlined />
               <span>个人中心</span>
             </a-menu-item>
@@ -41,20 +39,22 @@
 import {
   UserOutlined,
   LogoutOutlined,
-  ExclamationCircleOutlined,
-  BellOutlined,
-  FullscreenOutlined
-  // FullscreenExitOutlined
+  ExclamationCircleOutlined
 } from '@ant-design/icons-vue'
 import { createVNode } from 'vue'
 import { mapGetters } from 'vuex'
+import Notification from './notification'
+import Fullscreen from '@/components/fullscreen'
 export default {
   name: 'HeaderBar',
   components: {
     UserOutlined,
     LogoutOutlined,
-    BellOutlined,
-    FullscreenOutlined
+    Notification,
+    Fullscreen
+  },
+  data() {
+    return {}
   },
   computed: {
     ...mapGetters(['collapsed', 'user'])
@@ -75,6 +75,9 @@ export default {
           })
         }
       })
+    },
+    onToPersonCenter() {
+      console.log('onToPersonCenter')
     }
   }
 }
@@ -103,20 +106,7 @@ export default {
       background-color: #f9f9fc;
     }
   }
-  .notification {
-    height: 100%;
-    cursor: pointer;
-    ::v-deep .ant-badge-count {
-      min-width: 14px;
-      height: 14px;
-      padding: 0;
-      font-size: 12px;
-      line-height: 14px;
-      border-radius: 7px;
-      background: #ff4d4f;
-    }
-  }
-  .icon-bell, .fullscreen {
+  ::v-deep .icon-bell, .fullscreen {
     font-size: 18px;
     color: rgba(105, 123, 140, .7);
   }
@@ -138,6 +128,19 @@ export default {
     .username {
       margin-left: 8px;
       color: rgba(105, 123, 140, .7);
+    }
+  }
+  .notification {
+    height: 100%;
+    cursor: pointer;
+    ::v-deep .ant-badge-count {
+      min-width: 14px;
+      height: 14px;
+      padding: 0;
+      font-size: 12px;
+      line-height: 14px;
+      border-radius: 7px;
+      background: #ff4d4f;
     }
   }
 </style>

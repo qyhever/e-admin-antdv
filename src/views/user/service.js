@@ -4,7 +4,7 @@ import request from '@/api/request'
 export const getUsers = (params, loadingCb) => {
   return request({
     method: 'get',
-    url: '/user',
+    url: '/user/find',
     params,
     loadingCb
   })
@@ -33,15 +33,6 @@ export const patchUser = (data, loadingCb) => {
     method: 'patch',
     url: '/user',
     data,
-    loadingCb
-  })
-}
-
-export const deleteUser = (params, loadingCb) => {
-  return request({
-    method: 'delete',
-    url: `/user/${params.id}`,
-    params,
     loadingCb
   })
 }
