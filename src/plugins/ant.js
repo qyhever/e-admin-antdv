@@ -21,7 +21,8 @@ import {
   Space,
   Tabs,
   Spin,
-  Popover
+  Popover,
+  Upload
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -50,6 +51,7 @@ export default function(app) {
     .use(Tabs)
     .use(Spin)
     .use(Popover)
+    .use(Upload)
 
   g.$message = message
   g.$info = Modal.info
