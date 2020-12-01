@@ -1,13 +1,15 @@
 <template>
-  <section class="layout">
-    <SlideBar></SlideBar>
+  <section class="layout" :class="{mobile}">
+    <HeaderBar></HeaderBar>
     <section class="layout-content">
-      <HeaderBar></HeaderBar>
-      <TagsNav></TagsNav>
-      <main class="main">
-        <router-view/>
-      </main>
-      <FooterBar class="footer"></FooterBar>
+      <SlideBar></SlideBar>
+      <div class="layout-content__inner">
+        <TagsNav></TagsNav>
+        <main class="main">
+          <router-view/>
+        </main>
+        <FooterBar class="footer"></FooterBar>
+      </div>
     </section>
   </section>
 </template>
@@ -17,6 +19,8 @@ import HeaderBar from './headerbar'
 import SlideBar from './slidebar'
 import TagsNav from './tags-nav'
 import FooterBar from '@/components/footerbar'
+import { isMobile } from '@/utils/system'
+import './index.less'
 export default {
   name: 'BasicLayout',
   components: {
@@ -24,21 +28,43 @@ export default {
     SlideBar,
     TagsNav,
     FooterBar
+  },
+  data() {
+    return {
+      mobile: false
+    }
+  },
+  mounted() {
+    this.onResize()
+    window.addEventListener('resize', this.onResize)
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize)
+  },
+  methods: {
+    onResize() {
+      const val = isMobile()
+      this.mobile = val
+      this.$store.commit('app/TOGGLE_SLIDE_BAR', val)
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
-  .layout {
-    display: flex;
-  }
+  // .layout {
+  //   display: flex;
+  // }
   .layout-content {
     flex: auto;
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    // flex-direction: column;
+    // min-height: 100vh;
     background: #f0f2f5;
     overflow-x: hidden;
+  }
+  .layout-content__inner {
+    flex: auto;
   }
   .header {
     z-index: 9;

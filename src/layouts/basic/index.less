@@ -1,0 +1,22 @@
+.layout {
+  &.mobile {
+    .logo-container {
+      width: @slide-width--collapse;
+      .title {
+        display: none;
+      }
+    }
+  }
+  .slidebar {
+    .menu {
+      .ant-menu-item, .ant-menu-submenu {
+        .svg-icon {
+          font-size: 18px;
+        }
+        .anticon, .anticon + span {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
