@@ -1,5 +1,5 @@
 <template>
-  <section class="layout" :class="{mobile}">
+  <section class="layout header-fixed slidebar-fixed tag-fixed" :class="{mobile, collapsed}">
     <HeaderBar></HeaderBar>
     <section class="layout-content">
       <SlideBar></SlideBar>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import HeaderBar from './headerbar'
 import SlideBar from './slidebar'
 import TagsNav from './tags-nav'
@@ -33,6 +34,9 @@ export default {
     return {
       mobile: false
     }
+  },
+  computed: {
+    ...mapGetters(['collapsed'])
   },
   mounted() {
     this.onResize()
@@ -65,10 +69,6 @@ export default {
   }
   .layout-content__inner {
     flex: auto;
-  }
-  .header {
-    z-index: 9;
-    width: 100%;
   }
   .global-header {
     display: flex;

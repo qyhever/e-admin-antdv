@@ -92,9 +92,10 @@ export default {
 
 <style lang="less" scoped>
   .header {
-    z-index: 99;
+    z-index: 199;
     position: relative;
     display: flex;
+    width: 100%;
     height: @header-height;
     padding-right: 24px;
     background: #fff;
