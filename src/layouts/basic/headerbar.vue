@@ -84,7 +84,7 @@ export default {
       })
     },
     onToPersonCenter() {
-      console.log('onToPersonCenter')
+      this.$router.push('/userinfo')
     }
   }
 }
