@@ -16,6 +16,8 @@ export default defineComponent({
   },
   setup(props) {
     const chartRef = ref(null)
+    const chartIns = ref(null)
+    useChartResize(chartIns)
 
     onMounted(() => {
       init() // eslint-disable-line
@@ -25,8 +27,7 @@ export default defineComponent({
       if (!chartRef.value) {
         return
       }
-      const chart = window.echarts.init(chartRef.value)
-      useChartResize(chart)
+      const chart = chartIns.value = window.echarts.init(chartRef.value)
       chart.setOption(getOption(props.list))
     }
 

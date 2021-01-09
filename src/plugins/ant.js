@@ -29,7 +29,8 @@ import {
   Pagination,
   Cascader,
   Card,
-  Progress
+  Progress,
+  Switch
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -66,6 +67,7 @@ export default function(app) {
     .use(Cascader)
     .use(Card)
     .use(Progress)
+    .use(Switch)
 
   g.$message = message
   g.$info = Modal.info

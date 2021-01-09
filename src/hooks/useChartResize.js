@@ -1,9 +1,9 @@
 import { onMounted, onBeforeUnmount, watch } from 'vue'
 import store from '@/store'
 
-export default function (chart) {
+export default function (chartIns) {
   function onResize() {
-    chart.resize()
+    chartIns.value && chartIns.value.resize()
   }
 
   let timer = null
