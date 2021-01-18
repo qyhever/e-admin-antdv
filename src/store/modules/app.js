@@ -6,7 +6,6 @@ export default {
   state: {
     loading: false,
     collapsed: getCollapse() || false,
-    tagNavList: [],
     sliderTheme: getSideBarTheme() === 'dark' ? 'dark' : 'light',
     tagsNavVisible: true
   },
