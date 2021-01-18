@@ -30,7 +30,8 @@ import {
   Cascader,
   Card,
   Progress,
-  Switch
+  Switch,
+  BackTop
 } from 'ant-design-vue'
 
 export default function(app) {
@@ -68,6 +69,7 @@ export default function(app) {
     .use(Card)
     .use(Progress)
     .use(Switch)
+    .use(BackTop)
 
   g.$message = message
   g.$info = Modal.info

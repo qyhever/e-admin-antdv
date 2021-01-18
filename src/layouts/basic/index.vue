@@ -1,5 +1,12 @@
 <template>
-  <section class="basic-layout header-fixed slidebar-fixed tag-fixed" :class="{mobile, collapsed}">
+  <section
+    class="basic-layout header-fixed slidebar-fixed tag-fixed"
+    :class="{
+      mobile,
+      collapsed,
+      'hidden-tags-nav': !tagsNavVisible
+    }"
+  >
     <SlideBar></SlideBar>
     <div class="layout-content">
       <HeaderBar></HeaderBar>
@@ -9,6 +16,7 @@
       </main>
       <FooterBar class="footer"></FooterBar>
     </div>
+    <BackTop />
   </section>
 </template>
 
@@ -18,6 +26,7 @@ import HeaderBar from './headerbar'
 import SlideBar from './slidebar'
 import TagsNav from './tags-nav'
 import FooterBar from '@/components/footerbar'
+import BackTop from './back-top'
 import { isMobile } from '@/utils/system'
 import './index.less'
 export default {
@@ -26,7 +35,8 @@ export default {
     HeaderBar,
     SlideBar,
     TagsNav,
-    FooterBar
+    FooterBar,
+    BackTop
   },
   data() {
     return {
@@ -34,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['collapsed'])
+    ...mapGetters(['collapsed', 'tagsNavVisible'])
   },
   mounted() {
     this.onResize()
